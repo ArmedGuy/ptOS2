@@ -11,8 +11,7 @@ namespace ptOS
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery.*",
-                        "~/Scripts/jquery-*",
-                        "~/Scripts/jVectorMaps/*.js"));
+                        "~/Scripts/jquery-*").IncludeDirectory("~/Scripts/jVectorMaps", "*.js", true));
 
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
