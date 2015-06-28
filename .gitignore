@@ -47,6 +47,7 @@ Temporary Items
 packages/
 bin/
 obj/
+Scripts/
 *.suo
 *.user
 
