@@ -1,0 +1,16 @@
+﻿<ul class="nav nav-pills nav-stacked side-menu">
+    <li ng-class="{active: isCurrentPathExact('/')}">
+        <a href="#/">Dashboard</a>
+    </li>
+    <li ng-class="{active: isCurrentPath('Players')}">
+        <a href="#/Players"> Players</a>
+        <small ng-if="currentPlayer() != null">{{currentPlayer().Username}}</small>
+    </li>
+    <li ng-class="{active: isCurrentPath('Servers')}">
+        <a href="#/Servers">Servers</a>
+        <small ng-if="currentServer() != null">{{currentServer().Name}}</small>
+    </li>
+    <li ng-class="{active: isCurrentPath('Events')}">
+        <a href="#/Events">Events</a>
+    </li>
+</ul>

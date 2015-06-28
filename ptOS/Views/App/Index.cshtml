@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "ptOS";
+}
+<div ng-app="ptOS" ng-controller="ptOS.Wrapper">
+    <pageslide ps-open="navSlider()" ps-squeeze="true" ps-side="left">
+        <div>
+            <!---->
+            <div ng-include="navSliderTemplate()"></div>
+        </div>
+    </pageslide>
+    <nav class="navbar navbar-fixed-top navbar-default">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="nav">
+                <button type="button" class="btn navbar-btn" ng-click="toggleNavSlider()">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="app-logo">
+        <img src="/Content/logo-white.png" alt="Logo"/>
+    </div>
+    <div ng-view></div>
+</div>

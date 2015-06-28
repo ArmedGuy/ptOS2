@@ -1,0 +1,46 @@
+﻿<div class="container">
+    <h2>Servers <small>Authorized servers</small>
+    </h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                GUID
+            </th>
+            <th>
+                Authentication Key
+            </th>
+            <th>
+
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="server in servers">
+            <td>
+                <a href="#/Servers/{{server.Id}}">{{server.Name}}</a>
+            </td>
+            <td>
+                {{server.Guid}}
+            </td>
+            <td>
+                {{server.AuthKey}}
+            </td>
+            <td>
+                <button class="btn btn-danger btn-xs" ng-click="remove(server)">Remove</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <input type="text" ng-model="serverName" class="form-control" placeholder="Server Name"/>
+            </td>
+            <td>
+                <button class="btn btn-primary btn-block" ng-click="add()">Add server</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

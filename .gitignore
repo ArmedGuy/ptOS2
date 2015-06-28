@@ -41,3 +41,14 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
+# VS
+packages/
+bin/
+obj/
+*.suo
+*.user
+
+ptOS/WebApp/*.js
+ptOS/WebApp/*js.map

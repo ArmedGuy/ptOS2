@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ptOS.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EventData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventId" Type="bigint" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServerId" Type="int" />
+          <Property Name="PlayerId" Type="bigint" />
+          <Property Name="Type" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Submitted" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Players">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Guid" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="256" />
+          <Property Name="Ip" Type="nvarchar" MaxLength="256" />
+          <Property Name="LastServerId" Type="int" />
+          <Property Name="FirstSeen" Type="datetime" />
+          <Property Name="LastSeen" Type="datetime" />
+          <Property Name="LastCountry" Type="char" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="Servers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Guid" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="AuthKey" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Statistics">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServerId" Type="int" />
+          <Property Name="PlayerId" Type="bigint" />
+          <Property Name="AltId" Type="varchar" MaxLength="64" />
+          <Property Name="Type" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="At" Type="datetime" />
+          <Property Name="Value" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EventData_EventData">
+          <End Role="Events" Type="Self.Events" Multiplicity="1" />
+          <End Role="EventData" Type="Self.EventData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EventData">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Players">
+          <End Role="Players" Type="Self.Players" Multiplicity="0..1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Servers">
+          <End Role="Servers" Type="Self.Servers" Multiplicity="0..1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="ServerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Players_Servers">
+          <End Role="Servers" Type="Self.Servers" Multiplicity="0..1" />
+          <End Role="Players" Type="Self.Players" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Players">
+              <PropertyRef Name="LastServerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Statistics_Players">
+          <End Role="Players" Type="Self.Players" Multiplicity="0..1" />
+          <End Role="Statistics" Type="Self.Statistics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Statistics">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Statistics_Servers">
+          <End Role="Servers" Type="Self.Servers" Multiplicity="0..1" />
+          <End Role="Statistics" Type="Self.Statistics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Statistics">
+              <PropertyRef Name="ServerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ptOSStoreContainer">
+          <EntitySet Name="EventData" EntityType="Self.EventData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Players" EntityType="Self.Players" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Servers" EntityType="Self.Servers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Statistics" EntityType="Self.Statistics" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EventData_EventData" Association="Self.FK_EventData_EventData">
+            <End Role="Events" EntitySet="Events" />
+            <End Role="EventData" EntitySet="EventData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Players" Association="Self.FK_Events_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Servers" Association="Self.FK_Events_Servers">
+            <End Role="Servers" EntitySet="Servers" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Players_Servers" Association="Self.FK_Players_Servers">
+            <End Role="Servers" EntitySet="Servers" />
+            <End Role="Players" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Statistics_Players" Association="Self.FK_Statistics_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="Statistics" EntitySet="Statistics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Statistics_Servers" Association="Self.FK_Statistics_Servers">
+            <End Role="Servers" EntitySet="Servers" />
+            <End Role="Statistics" EntitySet="Statistics" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ptOS" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ptOSContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EventDatas" EntityType="ptOS.EventData" />
+          <EntitySet Name="Events" EntityType="ptOS.Event" />
+          <EntitySet Name="Players" EntityType="ptOS.Player" />
+          <EntitySet Name="Servers" EntityType="ptOS.Server" />
+          <EntitySet Name="Statistics" EntityType="ptOS.Statistic" />
+          <AssociationSet Name="FK_EventData_EventData" Association="ptOS.FK_EventData_EventData">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="EventData" EntitySet="EventDatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Players" Association="ptOS.FK_Events_Players">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Servers" Association="ptOS.FK_Events_Servers">
+            <End Role="Server" EntitySet="Servers" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Players_Servers" Association="ptOS.FK_Players_Servers">
+            <End Role="Server" EntitySet="Servers" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Statistics_Players" Association="ptOS.FK_Statistics_Players">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="Statistic" EntitySet="Statistics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Statistics_Servers" Association="ptOS.FK_Statistics_Servers">
+            <End Role="Server" EntitySet="Servers" />
+            <End Role="Statistic" EntitySet="Statistics" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="EventData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventId" Type="Int64" Nullable="false" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Event" Relationship="ptOS.FK_EventData_EventData" FromRole="EventData" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServerId" Type="Int32" />
+          <Property Name="PlayerId" Type="Int64" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Submitted" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="EventDatas" Relationship="ptOS.FK_EventData_EventData" FromRole="Event" ToRole="EventData" />
+          <NavigationProperty Name="Player" Relationship="ptOS.FK_Events_Players" FromRole="Event" ToRole="Player" />
+          <NavigationProperty Name="Server" Relationship="ptOS.FK_Events_Servers" FromRole="Event" ToRole="Server" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Guid" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Ip" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="LastServerId" Type="Int32" />
+          <Property Name="FirstSeen" Type="DateTime" Precision="3" />
+          <Property Name="LastSeen" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Events" Relationship="ptOS.FK_Events_Players" FromRole="Player" ToRole="Event" />
+          <NavigationProperty Name="LastServer" Relationship="ptOS.FK_Players_Servers" FromRole="Player" ToRole="Server" />
+          <NavigationProperty Name="Statistics" Relationship="ptOS.FK_Statistics_Players" FromRole="Player" ToRole="Statistic" />
+          <Property Name="LastCountry" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Server">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Guid" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="AuthKey" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Events" Relationship="ptOS.FK_Events_Servers" FromRole="Server" ToRole="Event" />
+          <NavigationProperty Name="Players" Relationship="ptOS.FK_Players_Servers" FromRole="Server" ToRole="Player" />
+          <NavigationProperty Name="Statistics" Relationship="ptOS.FK_Statistics_Servers" FromRole="Server" ToRole="Statistic" />
+        </EntityType>
+        <EntityType Name="Statistic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="ServerId" Type="Int32" />
+          <Property Name="PlayerId" Type="Int64" />
+          <Property Name="AltId" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="At" Type="DateTime" Precision="3" />
+          <Property Name="Value" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="Player" Relationship="ptOS.FK_Statistics_Players" FromRole="Statistic" ToRole="Player" />
+          <NavigationProperty Name="Server" Relationship="ptOS.FK_Statistics_Servers" FromRole="Statistic" ToRole="Server" />
+        </EntityType>
+        <Association Name="FK_EventData_EventData">
+          <End Type="ptOS.Event" Role="Event" Multiplicity="1" />
+          <End Type="ptOS.EventData" Role="EventData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EventData">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Players">
+          <End Type="ptOS.Player" Role="Player" Multiplicity="0..1" />
+          <End Type="ptOS.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Servers">
+          <End Type="ptOS.Server" Role="Server" Multiplicity="0..1" />
+          <End Type="ptOS.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Server">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="ServerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Players_Servers">
+          <End Type="ptOS.Server" Role="Server" Multiplicity="0..1" />
+          <End Type="ptOS.Player" Role="Player" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Server">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Player">
+              <PropertyRef Name="LastServerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Statistics_Players">
+          <End Type="ptOS.Player" Role="Player" Multiplicity="0..1" />
+          <End Type="ptOS.Statistic" Role="Statistic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Statistic">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Statistics_Servers">
+          <End Type="ptOS.Server" Role="Server" Multiplicity="0..1" />
+          <End Type="ptOS.Statistic" Role="Statistic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Server">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Statistic">
+              <PropertyRef Name="ServerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="ptOS" />
+        <Alias Key="Target" Value="ptOS.Store" />
+        <EntityContainerMapping CdmEntityContainer="ptOSContainer" StorageEntityContainer="ptOSStoreContainer">
+          <EntitySetMapping Name="EventDatas">
+            <EntityTypeMapping TypeName="ptOS.EventData">
+              <MappingFragment StoreEntitySet="EventData">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="ptOS.Event">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="Submitted" ColumnName="Submitted" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="ServerId" ColumnName="ServerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="ptOS.Player">
+              <MappingFragment StoreEntitySet="Players">
+                <ScalarProperty Name="LastCountry" ColumnName="LastCountry" />
+                <ScalarProperty Name="LastSeen" ColumnName="LastSeen" />
+                <ScalarProperty Name="FirstSeen" ColumnName="FirstSeen" />
+                <ScalarProperty Name="LastServerId" ColumnName="LastServerId" />
+                <ScalarProperty Name="Ip" ColumnName="Ip" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Servers">
+            <EntityTypeMapping TypeName="ptOS.Server">
+              <MappingFragment StoreEntitySet="Servers">
+                <ScalarProperty Name="AuthKey" ColumnName="AuthKey" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Statistics">
+            <EntityTypeMapping TypeName="ptOS.Statistic">
+              <MappingFragment StoreEntitySet="Statistics">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="At" ColumnName="At" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="AltId" ColumnName="AltId" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="ServerId" ColumnName="ServerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

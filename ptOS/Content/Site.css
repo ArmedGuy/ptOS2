@@ -1,0 +1,84 @@
+﻿html {
+}
+body {
+    margin-top: 62px;
+    position: absolute;
+    right: 0;
+    left: 0;
+}
+.app-logo {
+    z-index: 4000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 133px;
+    height: 50px;
+}
+.app-logo img {
+    width: 100%;
+    height: auto;
+}
+.btn {
+    border-radius: 0;
+}
+.ng-pageslide {
+    background-color: #2C3E50;
+    padding-top: 62px;
+    color: #374b5f;
+}
+.event {
+    padding: 0 auto;
+}
+.slider-area {
+    background-color: #23303d;
+    padding: 25px;
+    color: #374b5f;
+}
+.slider-area-light {
+    padding: 25px;
+    color: #252725;
+}
+.world-map {
+    position: relative;
+    display: block;
+}
+.jvectormap-label {
+    position: absolute;
+    top: 20px !important;
+    left: auto !important;
+    right: 40px !important;
+    background-color: white;
+    padding: 5px;
+    font-size: 1em;
+}
+.side-menu li {
+    display: block;
+}
+.side-menu li a {
+    border-radius: 0;
+    color: #42607d;
+    font-size: 1.3em;
+}
+.side-menu li small {
+    display: none;
+    cursor: pointer;
+}
+.side-menu li.active {
+    padding: 25px;
+    background-color: #23303d;
+}
+.side-menu li.active small {
+    color: #8fa2b6;
+    padding: 2px;
+    font-weight: bold;
+    display: inline;
+}
+.side-menu li.active a, .side-menu li.active a:hover, .side-menu li.active a:active, .side-menu li.active a:link, .side-menu li.active a:visited {
+    padding-left: 0;
+    padding-bottom: 0;
+    background-color: transparent;
+    color: #40576d;
+    font-size: 1.7em;
+}
