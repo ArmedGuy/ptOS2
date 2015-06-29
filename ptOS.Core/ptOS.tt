@@ -100,9 +100,15 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
             {
 #>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+<#
+                if(!codeStringGenerator.NavigationProperty(navigationProperty).Contains("EventData"))
+                {
+#>
     [Newtonsoft.Json.JsonIgnore]
 <#
+                }
             }
+
 #>
     <#=codeStringGenerator.NavigationProperty(navigationProperty)#>
 <#

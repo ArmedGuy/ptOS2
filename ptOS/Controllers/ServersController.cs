@@ -119,6 +119,14 @@ namespace ptOS.Controllers
             return Ok(server);
         }
 
+        [Route("api/Servers/{id}/Players")]
+        [HttpGet]
+        public IQueryable<Player> GetPlayersOnServer(int id)
+        {
+            var lastSeen = DateTime.UtcNow.AddMinutes(-5);
+            return db.Players.Where(x => x.LastServer.Id == id && x.LastSeen > lastSeen).OrderByDescending(x => x.LastSeen);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

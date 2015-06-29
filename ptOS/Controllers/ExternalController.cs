@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using MaxMind.GeoIP2;
 using ptOS.Core;
 using ptOS.Core.Realtime;
 using ptOS.Core.Statistics;
@@ -44,6 +45,7 @@ namespace ptOS.Controllers
                     
                 }
                 player.Username = model.PlayerName;
+
                 if (player.Ip != model.PlayerIp && !String.IsNullOrWhiteSpace(player.Ip) && !String.IsNullOrWhiteSpace(model.PlayerIp))
                 {
                     // new event for ipchange
@@ -51,6 +53,7 @@ namespace ptOS.Controllers
                     
                 }
                 player.Ip = model.PlayerIp;
+                player.LastCountry = Startup.IpDatabase.City(player.Ip).Country.IsoCode;
                 
                 var evt = new Event
                 {

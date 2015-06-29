@@ -1,0 +1,8 @@
+﻿<div ng-repeat="event in listEvents | skip:(page*perPage) | take:perPage">
+    <div class="well well-sm" ng-include="eventTemplate(event)"></div>
+</div>
+<ul class="pagination" ng-hide="listEvents.length < perPage">
+    <li><a ng-click="prevPage()">«</a></li>
+    <li><a>{{page+1}} / {{pages()}}</a></li>
+    <li><a ng-click="nextPage()">»</a></li>
+</ul>

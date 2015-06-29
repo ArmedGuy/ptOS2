@@ -7,9 +7,7 @@
         <div class="col-md-3">
             <h3><i class="fa fa-circle" style="color: #C9302C;"></i> Live Event Feed
             </h3>
-            <div ng-repeat="event in events">
-                <div class="well well-sm" ng-include="eventTemplate(event)"></div>
-            </div>
+            <event-list events="events" per-page="10"></event-list>
         </div>
         <div class="col-md-4">
             <h3>Statistics</h3>

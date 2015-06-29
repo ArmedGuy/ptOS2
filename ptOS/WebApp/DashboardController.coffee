@@ -9,10 +9,6 @@ app.controller "ptOS.Dashboard", ($scope, SliderService, RealtimeService, $http)
         Value: 200
     ]
     $scope.events = []
-    $scope.playersToday = 
-        SE: 3000
-        US: 4
-        RS: 16
     $scope.connected = ->
         RealtimeService.connected()
     

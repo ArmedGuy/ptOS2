@@ -28,7 +28,8 @@ namespace ptOS
                 "~/Scripts/angular.js",
                 "~/Scripts/angular-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/lodash").Include(
+            bundles.Add(new ScriptBundle("~/bundles/deps").Include(
+                "~/Scripts/moment.js",
                 "~/Scripts/lodash.js"));
 
             bundles.IgnoreList.Ignore("*.coffee");

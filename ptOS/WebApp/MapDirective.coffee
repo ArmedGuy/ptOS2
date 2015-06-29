@@ -13,7 +13,7 @@ app.directive "worldMap", ->
         scope.$watch "mapData", (n, o) ->
             if not chart?
                 $(element).width 'auto'
-                height = if attrs.mapHeight? then attrs.mapHeight  else 400
+                height = if attrs.mapHeight? then attrs.mapHeight else 400
                 $(element).height "#{height}px"
                 
                 chart = $(element).vectorMap

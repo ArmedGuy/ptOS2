@@ -1,6 +1,9 @@
 ﻿# CoffeeScript
 app = angular.module "ptOS", ["ngAnimate", "ngRoute", "pageslide-directive"]
 
+app.filter "timeAgo", ->
+    (input) ->
+        moment.utc(input).fromNow()
 
 app.config ($routeProvider) ->
     @$inject = ["$routeProvider"]

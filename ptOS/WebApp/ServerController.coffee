@@ -5,6 +5,8 @@ app.controller "ptOS.Server", ($scope, $routeParams, $http, CurrentService) ->
     @$inject = ["$scope", "$routeParams", "$http", "CurrentService"]
     id = $routeParams.id
     
+    $scope.playerCountries =
+        SE: 1
     $scope.serverStats = []
     $scope.events = []
     $scope.server = null
@@ -23,3 +25,11 @@ app.controller "ptOS.Server", ($scope, $routeParams, $http, CurrentService) ->
         .then (result) ->
             CurrentService.setCurrentServer result.data
             $scope.server = result.data
+    $http.get "/api/Servers/#{id}/Players"
+        .then (result) ->
+            $scope.activePlayers = result.data
+            _.forEach $scope.activePlayers, (plr) ->
+                if $scope.playerCountries[plr.LastCountry]?
+                    $scope.playerCountries[plr.LastCountry]++
+                else
+                    $scope.playerCountries[plr.LastCountry] = 1

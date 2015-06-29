@@ -238,6 +238,8 @@
     <Content Include="Scripts\angular-message-format.min.js" />
     <Content Include="Scripts\angular-messages.js" />
     <Content Include="Scripts\angular-messages.min.js" />
+    <Content Include="Scripts\angular-moment.js" />
+    <Content Include="Scripts\angular-moment.min.js" />
     <Content Include="Scripts\angular-pageslide-directive.js" />
     <Content Include="Scripts\angular-pageslide-directive.min.js" />
     <Content Include="Scripts\angular-resource.js" />
@@ -251,6 +253,10 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="WebApp\app.js">
       <DependentUpon>app.coffee</DependentUpon>
     </Content>
@@ -268,6 +274,12 @@
     </Content>
     <Content Include="WebApp\DashboardController.min.js">
       <DependentUpon>DashboardController.js</DependentUpon>
+    </Content>
+    <Content Include="WebApp\EventListDirective.js">
+      <DependentUpon>EventListDirective.coffee</DependentUpon>
+    </Content>
+    <Content Include="WebApp\EventListDirective.min.js">
+      <DependentUpon>EventListDirective.js</DependentUpon>
     </Content>
     <Content Include="WebApp\LoginController.js">
       <DependentUpon>LoginController.coffee</DependentUpon>
@@ -324,7 +336,12 @@
       <DependentUpon>SliderService.js</DependentUpon>
     </Content>
     <Content Include="WebApp\templates\Dashboard.html" />
+    <Content Include="WebApp\templates\directives\EventList.html" />
+    <Content Include="WebApp\templates\events\left.html" />
     <Content Include="WebApp\templates\events\joined.html" />
+    <Content Include="WebApp\templates\events\sayteam.html" />
+    <Content Include="WebApp\templates\events\saysquad.html" />
+    <Content Include="WebApp\templates\events\sayglobal.html" />
     <Content Include="WebApp\templates\NavSlider.html" />
     <Content Include="WebApp\templates\Player.html" />
     <Content Include="WebApp\templates\PlayerSlider.html" />
@@ -449,6 +466,7 @@
       <DependentUpon>CurrentService.min.js</DependentUpon>
     </Content>
     <Content Include="App_Data\GeoLite2-City.mmdb" />
+    <Content Include="Scripts\angular-moment.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
@@ -1255,6 +1273,13 @@
     </Content>
     <Content Include="WebApp\ServerController.min.js.map">
       <DependentUpon>ServerController.min.js</DependentUpon>
+    </Content>
+    <Content Include="WebApp\EventListDirective.coffee" />
+    <Content Include="WebApp\EventListDirective.js.map">
+      <DependentUpon>EventListDirective.js</DependentUpon>
+    </Content>
+    <Content Include="WebApp\EventListDirective.min.js.map">
+      <DependentUpon>EventListDirective.min.js</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup />

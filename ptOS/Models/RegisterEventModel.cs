@@ -15,5 +15,10 @@ namespace ptOS.Models
         public string PlayerIp { get; set; }
         public string EventType { get; set; }
         public Dictionary<string, string> EventData { get; set; }
+
+        public RegisterEventModel()
+        {
+             EventData = new Dictionary<string, string>();
+        }
     }
 }

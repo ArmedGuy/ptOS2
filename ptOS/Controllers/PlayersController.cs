@@ -17,9 +17,10 @@ namespace ptOS.Controllers
         private ptOSContainer db = new ptOSContainer();
 
         // GET: api/Players
-        public IQueryable<Player> GetPlayers()
+        [Route("api/Players/{page:int?}")]
+        public IQueryable<Player> GetPlayers(int page = 0)
         {
-            return db.Players;
+            return db.Players.OrderByDescending(x => x.Id).Skip(page*20).Take(20);
         }
 
         // GET: api/Players/5
@@ -35,85 +36,24 @@ namespace ptOS.Controllers
             return Ok(player);
         }
 
-        // PUT: api/Players/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutPlayer(long id, Player player)
+        [Route("api/Players/{id}/Chat")]
+        [HttpGet]
+        public IQueryable<Event> GetPlayerChat(long id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != player.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(player).State = System.Data.Entity.EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PlayerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            return
+                db.Events.Where(
+                    x => x.PlayerId == id && (x.Type == "sayglobal" || x.Type == "sayteam" || x.Type == "saysquad"))
+                    .OrderByDescending(x => x.Id);
         }
 
-        // POST: api/Players
-        [ResponseType(typeof(Player))]
-        public IHttpActionResult PostPlayer(Player player)
+        [Route("api/Players/{id}/Chat")]
+        [HttpGet]
+        public IQueryable<Event> GetPlayerAdminEvents(long id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Players.Add(player);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (PlayerExists(player.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("ptOSApi", new { id = player.Id }, player);
-        }
-
-        // DELETE: api/Players/5
-        [ResponseType(typeof(Player))]
-        public IHttpActionResult DeletePlayer(long id)
-        {
-            Player player = db.Players.Find(id);
-            if (player == null)
-            {
-                return NotFound();
-            }
-
-            db.Players.Remove(player);
-            db.SaveChanges();
-
-            return Ok(player);
+            return
+                db.Events.Where(
+                    x => x.PlayerId == id && (x.Type == "banned" || x.Type == "warned" || x.Type == "kicked"))
+                    .OrderByDescending(x => x.Id);
         }
 
         protected override void Dispose(bool disposing)

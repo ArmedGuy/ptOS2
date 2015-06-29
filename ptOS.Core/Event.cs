@@ -27,7 +27,6 @@ namespace ptOS.Core
         public System.DateTime Submitted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<EventData> EventDatas { get; set; }
         public virtual Player Player { get; set; }
         public virtual Server Server { get; set; }
