@@ -8,6 +8,7 @@ app.controller "ptOS.Dashboard", ($scope, SliderService, RealtimeService, $http)
         AltId: "EventsPerHour"
         Value: 200
     ]
+    $scope.playerCountries = {}
     $scope.events = []
     $scope.connected = ->
         RealtimeService.connected()
@@ -18,5 +19,9 @@ app.controller "ptOS.Dashboard", ($scope, SliderService, RealtimeService, $http)
     
     $http.get "/api/Statistics/System"
         .then (result) ->
-            throw err if err?
             $scope.systemStats = result.data
+    
+    $http.get "/api/Statistics/CountriesLastHour"
+        .then (result) ->
+            _.forEach result.data, (ct) ->
+                $scope.playerCountries[ct.Country] = ct.Weight

@@ -1,5 +1,6 @@
 ﻿# CoffeeScript
 
+scale = ['#C7DAED', '#2C3E50']
 app = angular.module "ptOS"
 
 app.directive "worldMap", ->
@@ -21,7 +22,7 @@ app.directive "worldMap", ->
                     series: {
                         regions: [
                             values: scope.mapData
-                            scale: ['#9AACBF', '#2C3E50']
+                            scale: scale
                             attribute:'fill'
                             normalizeFunction: 'linear'
                         ]
@@ -30,4 +31,5 @@ app.directive "worldMap", ->
                 region = chart.vectorMap('get', 'mapObject').series.regions[0]
                 region.setValues scope.mapData
                 region.setNormalizeFunction 'linear'
-                region.setScale(['#9AACBF', '#2C3E50'])
+                region.setScale(scale)
+        , true

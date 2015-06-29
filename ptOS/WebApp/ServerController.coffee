@@ -5,8 +5,7 @@ app.controller "ptOS.Server", ($scope, $routeParams, $http, CurrentService) ->
     @$inject = ["$scope", "$routeParams", "$http", "CurrentService"]
     id = $routeParams.id
     
-    $scope.playerCountries =
-        SE: 1
+    $scope.playerCountries = {}
     $scope.serverStats = []
     $scope.events = []
     $scope.server = null
