@@ -2,8 +2,8 @@
 
 app = angular.module "ptOS"
 
-app.factory "RealtimeService", ($rootScope) ->
-    @$inject = ["$rootScope"]
+app.factory "RealtimeService", ($rootScope, EventService) ->
+    @$inject = ["$rootScope", "EventService"]
     
     hub = $.connection.hub
     realtime = $.connection.realtimeHub
@@ -29,7 +29,7 @@ app.factory "RealtimeService", ($rootScope) ->
         reconnecting = false
     
     listener = (event, data) ->
-        console.log event, data
+        EventService.parseEvent data
         $rootScope.$apply () ->
             $rootScope.$broadcast(event, data)
     

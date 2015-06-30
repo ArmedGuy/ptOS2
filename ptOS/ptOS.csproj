@@ -200,6 +200,7 @@
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\ExternalController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlayersController.cs" />
     <Compile Include="Controllers\ServersController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
@@ -282,6 +283,12 @@
     <Content Include="WebApp\EventListDirective.min.js">
       <DependentUpon>EventListDirective.js</DependentUpon>
     </Content>
+    <Content Include="WebApp\EventService.js">
+      <DependentUpon>EventService.coffee</DependentUpon>
+    </Content>
+    <Content Include="WebApp\EventService.min.js">
+      <DependentUpon>EventService.js</DependentUpon>
+    </Content>
     <Content Include="WebApp\LoginController.js">
       <DependentUpon>LoginController.coffee</DependentUpon>
     </Content>
@@ -312,6 +319,12 @@
     <Content Include="WebApp\PlayerController.min.js">
       <DependentUpon>PlayerController.js</DependentUpon>
     </Content>
+    <Content Include="WebApp\PlayersController.js">
+      <DependentUpon>PlayersController.coffee</DependentUpon>
+    </Content>
+    <Content Include="WebApp\PlayersController.min.js">
+      <DependentUpon>PlayersController.js</DependentUpon>
+    </Content>
     <Content Include="WebApp\RealtimeService.js">
       <DependentUpon>RealtimeService.coffee</DependentUpon>
     </Content>
@@ -338,13 +351,22 @@
     </Content>
     <Content Include="WebApp\templates\Dashboard.html" />
     <Content Include="WebApp\templates\directives\EventList.html" />
+    <Content Include="WebApp\templates\events\gotbanned.html" />
+    <Content Include="WebApp\templates\events\gotwarned.html" />
+    <Content Include="WebApp\templates\events\gotkicked.html" />
+    <Content Include="WebApp\templates\events\banned.html" />
+    <Content Include="WebApp\templates\events\ipchanged.html" />
+    <Content Include="WebApp\templates\events\namechanged.html" />
+    <Content Include="WebApp\templates\events\kicked.html" />
+    <Content Include="WebApp\templates\events\warned.html" />
     <Content Include="WebApp\templates\events\left.html" />
     <Content Include="WebApp\templates\events\joined.html" />
     <Content Include="WebApp\templates\events\sayteam.html" />
     <Content Include="WebApp\templates\events\saysquad.html" />
-    <Content Include="WebApp\templates\events\sayglobal.html" />
+    <Content Include="WebApp\templates\events\sayall.html" />
     <Content Include="WebApp\templates\NavSlider.html" />
     <Content Include="WebApp\templates\Player.html" />
+    <Content Include="WebApp\templates\Players.html" />
     <Content Include="WebApp\templates\PlayerSlider.html" />
     <Content Include="WebApp\templates\Server.html" />
     <Content Include="WebApp\templates\Servers.html" />
@@ -1282,8 +1304,24 @@
     <Content Include="WebApp\EventListDirective.min.js.map">
       <DependentUpon>EventListDirective.min.js</DependentUpon>
     </Content>
+    <Content Include="WebApp\EventService.coffee" />
+    <Content Include="WebApp\EventService.js.map">
+      <DependentUpon>EventService.js</DependentUpon>
+    </Content>
+    <Content Include="WebApp\EventService.min.js.map">
+      <DependentUpon>EventService.min.js</DependentUpon>
+    </Content>
+    <Content Include="WebApp\PlayersController.coffee" />
+    <Content Include="WebApp\PlayersController.js.map">
+      <DependentUpon>PlayersController.js</DependentUpon>
+    </Content>
+    <Content Include="WebApp\PlayersController.min.js.map">
+      <DependentUpon>PlayersController.min.js</DependentUpon>
+    </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Home\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />

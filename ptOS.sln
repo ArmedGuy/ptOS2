@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ptOS", "ptOS\ptOS.csproj", "{6ECB28CE-727B-4ECC-857E-D4C14369C37C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ptOS.Tests", "ptOS.Tests\ptOS.Tests.csproj", "{A80D4534-A0BE-48DF-BD77-730437CF8490}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ptOS.Core", "ptOS.Core\ptOS.Core.csproj", "{931FC62F-5B0A-42B7-8FB4-B62BA09971B5}"
 EndProject
@@ -19,10 +17,6 @@ Global
 		{6ECB28CE-727B-4ECC-857E-D4C14369C37C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ECB28CE-727B-4ECC-857E-D4C14369C37C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6ECB28CE-727B-4ECC-857E-D4C14369C37C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A80D4534-A0BE-48DF-BD77-730437CF8490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A80D4534-A0BE-48DF-BD77-730437CF8490}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A80D4534-A0BE-48DF-BD77-730437CF8490}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A80D4534-A0BE-48DF-BD77-730437CF8490}.Release|Any CPU.Build.0 = Release|Any CPU
 		{931FC62F-5B0A-42B7-8FB4-B62BA09971B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{931FC62F-5B0A-42B7-8FB4-B62BA09971B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{931FC62F-5B0A-42B7-8FB4-B62BA09971B5}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,0 +1,50 @@
+﻿<div class="container">
+    <h2>
+        Players <small>All players</small>
+    </h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    GUID
+                </th>
+                <th>
+                    Last Server
+                </th>
+                <th>
+                    Last Seen
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td colspan="3">
+                <input type="text" class="form-control" ng-model="query" placeholder="Search name, Guid, IP, Country Code"/>
+            </td>
+            <td>
+               <button type="button" class="btn btn-block btn-primary" ng-click="search()">Search</button> 
+            </td>
+        </tr>
+        <tr ng-repeat="player in players | take:50">
+            <td>
+                <a href="#/Players/{{player.Id}}">{{player.Username}}</a>
+            </td>
+            <td>
+                {{player.Guid}}
+            </td>
+            <td>
+                {{player.LastServer.Name}}
+            </td>
+            <td>
+                {{player.LastSeen | timeAgo}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

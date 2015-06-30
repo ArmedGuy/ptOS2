@@ -15,7 +15,7 @@ namespace ptOS.Controllers
 {
     public class ExternalController : BaseApiController
     {
-        [Route("api/external/RegisterPlayerEvent")]
+        [Route("api/External/RegisterPlayerEvent")]
         [HttpPost]
         public bool RegisterEvent(RegisterEventModel model)
         {
@@ -41,7 +41,7 @@ namespace ptOS.Controllers
                 if (player.Username != model.PlayerName && !String.IsNullOrWhiteSpace(player.Username) && !String.IsNullOrWhiteSpace(model.PlayerName))
                 {
                     // new event for namechange
-                    Context.Events.Add(Event.NewChangeEvent(player, "username", player.Username, model.PlayerName));
+                    Context.Events.Add(Event.NewChangeEvent(player, "namechanged", player.Username, model.PlayerName));
                     
                 }
                 player.Username = model.PlayerName;
@@ -49,11 +49,12 @@ namespace ptOS.Controllers
                 if (player.Ip != model.PlayerIp && !String.IsNullOrWhiteSpace(player.Ip) && !String.IsNullOrWhiteSpace(model.PlayerIp))
                 {
                     // new event for ipchange
-                    Context.Events.Add(Event.NewChangeEvent(player, "ip", player.Ip, model.PlayerIp));
+                    Context.Events.Add(Event.NewChangeEvent(player, "ipchanged", player.Ip, model.PlayerIp));
                     
                 }
                 player.Ip = model.PlayerIp;
-                player.LastCountry = Startup.IpDatabase.City(player.Ip).Country.IsoCode;
+                if(!String.IsNullOrWhiteSpace(player.Ip))
+                    player.LastCountry = Startup.IpDatabase.City(player.Ip).Country.IsoCode;
                 
                 var evt = new Event
                 {

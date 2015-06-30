@@ -16,14 +16,41 @@ namespace ptOS.Controllers
     {
         private ptOSContainer db = new ptOSContainer();
 
-        // GET: api/Players
-        [Route("api/Players/{page:int?}")]
-        public IQueryable<Player> GetPlayers(int page = 0)
+        [Route("api/Players/Search")]
+        [HttpGet]
+        public IQueryable<Player> GetLastPlayers()
         {
-            return db.Players.OrderByDescending(x => x.Id).Skip(page*20).Take(20);
+            return db.Players.OrderByDescending(x => x.Id).Take(50);
+        }
+        
+        [Route("api/Players/Search/{query}")]
+        [HttpGet]
+        public IEnumerable<Player> SearchPlayers(string query)
+        {
+            if(String.IsNullOrWhiteSpace(query))
+                return db.Players.OrderByDescending(x => x.Id).Take(50);
+            var ips =
+                db.EventDatas.Where(x => x.Event.Type == "ipchanged" && x.Value.Contains(query))
+                    .Select(x => x.Event.Player).ToArray();
+            var names =
+                db.EventDatas.Where(x => x.Event.Type == "namechanged" && x.Value.Contains(query))
+                    .Select(x => x.Event.Player).ToArray();
+
+            var players =
+                db.Players.Where(
+                    x =>
+                        x.Username.Contains(query) || x.Ip.Contains(query) || x.LastCountry.Contains(query) ||
+                        x.Guid.Contains(query)).ToArray();
+
+            var ret = ips.ToList();
+            foreach (var name in names.Where(name => !ret.Contains(name)))
+                ret.Add(name);
+            foreach (var plr in players.Where(player => !ret.Contains(player)))
+                ret.Add(plr);
+            return ret;
         }
 
-        // GET: api/Players/5
+            // GET: api/Players/5
         [ResponseType(typeof(Player))]
         public IHttpActionResult GetPlayer(long id)
         {
@@ -38,22 +65,45 @@ namespace ptOS.Controllers
 
         [Route("api/Players/{id}/Chat")]
         [HttpGet]
-        public IQueryable<Event> GetPlayerChat(long id)
+        public IEnumerable<Event> GetPlayerChat(long id)
         {
             return
                 db.Events.Where(
-                    x => x.PlayerId == id && (x.Type == "sayglobal" || x.Type == "sayteam" || x.Type == "saysquad"))
-                    .OrderByDescending(x => x.Id);
+                    x => x.PlayerId == id && (x.Type == "sayall" || x.Type == "sayteam" || x.Type == "saysquad"))
+                    .OrderByDescending(x => x.Id).ToArray();
         }
 
-        [Route("api/Players/{id}/Chat")]
+        [Route("api/Players/{id}/AdminEvents")]
         [HttpGet]
-        public IQueryable<Event> GetPlayerAdminEvents(long id)
+        public IEnumerable<Event> GetPlayerAdminEvents(long id)
         {
             return
                 db.Events.Where(
-                    x => x.PlayerId == id && (x.Type == "banned" || x.Type == "warned" || x.Type == "kicked"))
-                    .OrderByDescending(x => x.Id);
+                    x =>
+                        x.PlayerId == id &&
+                        (x.Type == "banned" || x.Type == "warned" || x.Type == "kicked" || x.Type == "gotbanned" ||
+                         x.Type == "gotkicked" || x.Type == "gotwarned"))
+                    .OrderByDescending(x => x.Id).ToArray();
+        }
+
+        [Route("api/Players/{id}/IpChanges")]
+        [HttpGet]
+        public IEnumerable<Event> GetPlayerIpChanges(long id)
+        {
+            return
+                db.Events.Where(
+                    x => x.PlayerId == id && (x.Type == "ipchanged"))
+                    .OrderByDescending(x => x.Id).ToArray();
+        }
+
+        [Route("api/Players/{id}/NameChanges")]
+        [HttpGet]
+        public IEnumerable<Event> GetPlayerNameChanges(long id)
+        {
+            return
+                db.Events.Where(
+                    x => x.PlayerId == id && (x.Type == "namechanged"))
+                    .OrderByDescending(x => x.Id).ToArray();
         }
 
         protected override void Dispose(bool disposing)
