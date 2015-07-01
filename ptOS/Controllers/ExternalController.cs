@@ -17,6 +17,13 @@ namespace ptOS.Controllers
     {
         [Route("api/External/RegisterPlayerEvent")]
         [HttpPost]
+        public bool RegisterPlayerEvent(RegisterEventModel model)
+        {
+            return RegisterEvent(model);
+        }
+
+        [Route("api/External/RegisterEvent")]
+        [HttpPost]
         public bool RegisterEvent(RegisterEventModel model)
         {
             var server = Context.Servers.FirstOrDefault(x => x.Guid == model.ServerGuid && x.AuthKey == model.ServerKey);
@@ -24,41 +31,46 @@ namespace ptOS.Controllers
                 throw new InvalidOperationException("No server matching guid/key pair");
             Task.Run(() =>
             {
-                var player = Context.Players.FirstOrDefault(x => x.Guid == model.PlayerGuid);
-                if (player == null)
+                Player player = null;
+                if (!String.IsNullOrWhiteSpace(model.PlayerGuid))
                 {
-                    // Create new player
-                    player = new Player
+                    player = Context.Players.FirstOrDefault(x => x.Guid == model.PlayerGuid);
+                    if (player == null)
                     {
-                        Guid = model.PlayerGuid,
-                        FirstSeen = DateTime.UtcNow
-                    };
-                    Context.Players.Add(player);
-                    Context.SaveChanges();
-                }
-                player.LastSeen = DateTime.UtcNow;
-                player.LastServer = server;
-                if (player.Username != model.PlayerName && !String.IsNullOrWhiteSpace(player.Username) && !String.IsNullOrWhiteSpace(model.PlayerName))
-                {
-                    // new event for namechange
-                    Context.Events.Add(Event.NewChangeEvent(player, "namechanged", player.Username, model.PlayerName));
-                    
-                }
-                player.Username = model.PlayerName;
+                        // Create new player
+                        player = new Player
+                        {
+                            Guid = model.PlayerGuid,
+                            FirstSeen = DateTime.UtcNow
+                        };
+                        Context.Players.Add(player);
+                        Context.SaveChanges();
+                    }
+                    player.LastSeen = DateTime.UtcNow;
+                    player.LastServer = server;
+                    if (player.Username != model.PlayerName && !String.IsNullOrWhiteSpace(player.Username) &&
+                        !String.IsNullOrWhiteSpace(model.PlayerName))
+                    {
+                        // new event for namechange
+                        Context.Events.Add(Event.NewChangeEvent(player, "namechanged", player.Username, model.PlayerName));
 
-                if (player.Ip != model.PlayerIp && !String.IsNullOrWhiteSpace(player.Ip) && !String.IsNullOrWhiteSpace(model.PlayerIp))
-                {
-                    // new event for ipchange
-                    Context.Events.Add(Event.NewChangeEvent(player, "ipchanged", player.Ip, model.PlayerIp));
-                    
+                    }
+                    player.Username = model.PlayerName;
+
+                    if (player.Ip != model.PlayerIp && !String.IsNullOrWhiteSpace(player.Ip) &&
+                        !String.IsNullOrWhiteSpace(model.PlayerIp))
+                    {
+                        // new event for ipchange
+                        Context.Events.Add(Event.NewChangeEvent(player, "ipchanged", player.Ip, model.PlayerIp));
+
+                    }
+                    player.Ip = model.PlayerIp;
+                    if (!String.IsNullOrWhiteSpace(player.Ip))
+                        player.LastCountry = Startup.IpDatabase.City(player.Ip).Country.IsoCode;
                 }
-                player.Ip = model.PlayerIp;
-                if(!String.IsNullOrWhiteSpace(player.Ip))
-                    player.LastCountry = Startup.IpDatabase.City(player.Ip).Country.IsoCode;
-                
                 var evt = new Event
                 {
-                    PlayerId = player.Id,
+                    Player = player,
                     ServerId = server.Id,
                     Type = model.EventType,
                     Submitted = DateTime.UtcNow
@@ -81,11 +93,6 @@ namespace ptOS.Controllers
                 Context.SaveChanges();
 
                 RealtimeDispatcher.Get().Broadcast("event.new", evt);
-
-                // Calculate statistics
-                new CrunchDispatcher(player).Crunch();
-                new CrunchDispatcher(server).Crunch();
-                new CrunchDispatcher().Crunch();
             });
             return true;
         }
