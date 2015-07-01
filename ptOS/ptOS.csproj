@@ -351,6 +351,13 @@
     </Content>
     <Content Include="WebApp\templates\Dashboard.html" />
     <Content Include="WebApp\templates\directives\EventList.html" />
+    <Content Include="WebApp\templates\events\mapchanged.html" />
+    <Content Include="WebApp\templates\events\teamkilled.html" />
+    <Content Include="WebApp\templates\events\gotteamkilled.html" />
+    <Content Include="WebApp\templates\events\gotkilled.html" />
+    <Content Include="WebApp\templates\events\killed.html" />
+    <Content Include="WebApp\templates\events\gottempbanned.html" />
+    <Content Include="WebApp\templates\events\tempbanned.html" />
     <Content Include="WebApp\templates\events\gotbanned.html" />
     <Content Include="WebApp\templates\events\gotwarned.html" />
     <Content Include="WebApp\templates\events\gotkicked.html" />

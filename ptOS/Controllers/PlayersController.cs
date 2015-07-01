@@ -70,7 +70,7 @@ namespace ptOS.Controllers
             return
                 db.Events.Where(
                     x => x.PlayerId == id && (x.Type == "sayall" || x.Type == "sayteam" || x.Type == "saysquad"))
-                    .OrderByDescending(x => x.Id).ToArray();
+                    .OrderByDescending(x => x.Id).Take(500).ToArray();
         }
 
         [Route("api/Players/{id}/AdminEvents")]

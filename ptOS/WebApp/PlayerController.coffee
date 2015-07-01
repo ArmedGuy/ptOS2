@@ -11,10 +11,10 @@ app.controller "ptOS.Player", ($scope, $routeParams, EventService, $http) ->
     $scope.playerAdminEvents = []
     $scope.playerIpChanges = []
     $scope.playerNameChanges = []
-    id = $routeParams.id
+    id = parseInt $routeParams.id
     
     $scope.$on "event.new", (evt, data) ->
-        if data.Player? and data.Player.Id == id
+        if data.Player? and data.Player.Id == $scope.player.Id
             $scope.events.unshift(data)
             $scope.events.pop() if $scope.events.length > 20
             
@@ -33,7 +33,7 @@ app.controller "ptOS.Player", ($scope, $routeParams, EventService, $http) ->
                 .then (result) ->
                     _.forEach result.data, (e) ->
                         EventService.parseEvent e
-                    $scope.playerAdmin = result.data
+                    $scope.playerAdminEvents = result.data
             
             $http.get "/api/Players/#{id}/IpChanges"
                 .then (result) ->

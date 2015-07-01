@@ -64,7 +64,7 @@ class PtosPlugin( b3.plugin.Plugin ):
         
         # server events
         if event.type == b3.events.EVT_GAME_MAP_CHANGE:
-            self.send_event('mapchange', None, event.data)
+            self.send_event('mapchanged', None, event.data)
         
     def send_event(self, type, client, data={}):
         params = []

@@ -25,10 +25,14 @@
                         <td><b>Last Seen</b></td>
                         <td>{{player.LastSeen}}</td>
                     </tr>
-                    <tr>
-                        <td><b>Last Server</b></td>
-                        <td>{{player.LastServer.Name}}</td>
-                    </tr>
+                <tr>
+                    <td><b>Last Server</b></td>
+                    <td>{{player.LastServer.Name}}</td>
+                </tr>
+                <tr>
+                    <td><b>Watching</b></td>
+                    <td><button type="button" class="btn btn-success btn-xs" ng-click="setWatchedPlayer(player)">Watch player</button></td>
+                </tr>
                 </tbody>
             </table>
             <hr/>

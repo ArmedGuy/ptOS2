@@ -21,4 +21,9 @@
         <img src="/Content/logo-white.png" alt="Logo"/>
     </div>
     <div ng-view></div>
+    <div id="watch-event-list">
+        <div ng-repeat="event in watchEvents">
+            <div class="alert alert-info" ng-include="eventTemplate(event)"></div>
+        </div>
+    </div>
 </div>

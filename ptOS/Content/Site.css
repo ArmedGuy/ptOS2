@@ -82,3 +82,8 @@ body {
     color: #40576d;
     font-size: 1.7em;
 }
+#watch-event-list {
+    position: fixed;
+    top: 70px;
+    right: 40px;
+}
