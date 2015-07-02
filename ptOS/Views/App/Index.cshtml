@@ -2,7 +2,7 @@
     ViewBag.Title = "ptOS";
 }
 <div ng-app="ptOS" ng-controller="ptOS.Wrapper">
-    <pageslide ps-open="navSlider()" ps-squeeze="true" ps-side="left">
+    <pageslide ps-open="navSlider()" ps-squeeze="true" ps-side="left" class="hidden-xs">
         <div>
             <!---->
             <div ng-include="navSliderTemplate()"></div>
@@ -10,10 +10,24 @@
     </pageslide>
     <nav class="navbar navbar-fixed-top navbar-default">
         <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="nav">
-                <button type="button" class="btn navbar-btn" ng-click="toggleNavSlider()">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" ng-click="navToggle = !navToggle">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="nav" collapsed="navToggle">
+                <button type="button" class="btn navbar-btn hidden-xs" ng-click="toggleNavSlider()">
                     <i class="fa fa-bars"></i>
                 </button>
+                <ul class="nav navbar-nav visible-xs">
+                    <li><a href="#/">Dashboard</a></li>
+                    <li><a href="#/Players">Players</a></li>
+                    <li><a href="#/Servers">Servers</a></li>
+                    <li><a href="#/Events">Events</a></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -21,9 +35,9 @@
         <img src="/Content/logo-white.png" alt="Logo"/>
     </div>
     <div ng-view></div>
-    <div id="watch-event-list">
+    <div id="watch-event-list" class="hidden-xs">
         <div ng-repeat="event in watchEvents">
-            <div class="alert alert-info" ng-include="eventTemplate(event)"></div>
+            <div class="well well-sm" ng-include="eventTemplate(event)"></div>
         </div>
     </div>
 </div>
