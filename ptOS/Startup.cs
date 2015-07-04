@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Hosting;
+using Hangfire;
 using MaxMind.GeoIP2;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
@@ -21,6 +22,11 @@ namespace ptOS
             ConfigureAuth(app);
             app.MapSignalR();
 
+            GlobalConfiguration.Configuration
+                .UseSqlServerStorage("hangfire");
+
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
 
             GlobalHost.DependencyResolver.Register(typeof(JsonSerializer), () => JsonSerializer.Create(new JsonSerializerSettings
             {
