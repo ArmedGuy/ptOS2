@@ -1,5 +1,6 @@
 import os, sys
 import urllib, urllib2
+import time
 from urlparse import parse_qs
 class Client:
     guid = ""
@@ -34,7 +35,11 @@ class PtosStreamer:
                 u = parse_qs(pt[4])
                 
                 print "Sending event %s with client %s, data: %s" % (e, str(c), str(u))
-                self.send_event(e, c, u)
+                try:
+                    self.send_event(e, c, u)
+                except:
+                    print "failed to send event, not retrying..."
+            time.sleep(0.01)
     
     def read(self):
         filestats = os.fstat(self.input.fileno())

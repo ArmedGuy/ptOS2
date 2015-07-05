@@ -9,7 +9,22 @@
             </h3>
             <event-list events="events" per-page="10"></event-list>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
+            <h3>Charts</h3>
+            <div class="well">
+                <h4>Activity per hour</h4>
+                <div style="margin: 25px">
+                    <canvas id="eventsByHour"></canvas>
+                </div>
+            </div>
+            <div class="well">
+                <h4>Activity per server</h4>
+                <div style="margin: 25px">
+                    <canvas id="eventsByServer"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
             <h3>Statistics</h3>
             <table class="table table-striped table-condensed">
                 <thead>

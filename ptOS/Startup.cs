@@ -22,12 +22,6 @@ namespace ptOS
             ConfigureAuth(app);
             app.MapSignalR();
 
-            GlobalConfiguration.Configuration
-                .UseSqlServerStorage("hangfire");
-
-            app.UseHangfireDashboard();
-            app.UseHangfireServer();
-
             GlobalHost.DependencyResolver.Register(typeof(JsonSerializer), () => JsonSerializer.Create(new JsonSerializerSettings
             {
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

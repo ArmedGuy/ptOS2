@@ -36,8 +36,41 @@ namespace ptOS.Controllers
                     .Select(x => new CountryWeight
                     {
                         Country = x.Key,
-                        Weight = x.Sum(y => 1)
+                        Weight = x.Count()
                     }).ToArray();
+        }
+
+
+
+        [Route("api/Statistics/EventsByHourLastDay")]
+        [HttpGet]
+        public IEnumerable<ChartStatistic> GetEventsByHourLastDay()
+        {
+            var lastActive = DateTime.UtcNow.AddDays(-1);
+            return
+                Context.Events.Where(x => x.Submitted > lastActive)
+                    .GroupBy(x => x.Submitted.Hour)
+                    .OrderBy(x => x.Key)
+                    .Select(x => new ChartStatistic
+                    {
+                        Key = x.Key.ToString(),
+                        Value = x.Count()
+                    });
+        }
+
+        [Route("api/Statistics/EventsByServerLastDay")]
+        [HttpGet]
+        public IEnumerable<ChartStatistic> GetEventsByServerLastDay()
+        {
+            var lastActive = DateTime.UtcNow.AddDays(-1);
+            return
+                Context.Events.Where(x => x.Submitted > lastActive)
+                    .GroupBy(x => x.Server)
+                    .Select(x => new ChartStatistic
+                    {
+                        Key = x.Key.Name,
+                        Value = x.Count()
+                    });
         } 
     }
 }

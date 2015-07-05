@@ -26,10 +26,12 @@ namespace ptOS
             bundles.IgnoreList.Ignore("*angular-csp.css");
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                 "~/Scripts/angular.js",
-                "~/Scripts/angular-*"));
+                "~/Scripts/angular-*",
+                "~/Scripts/angular-ui/ui-bootstrap-tpls.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/deps").Include(
                 "~/Scripts/moment.js",
+                "~/Scripts/Chart.js",
                 "~/Scripts/lodash.js"));
 
             bundles.IgnoreList.Ignore("*.coffee");
@@ -39,6 +41,7 @@ namespace ptOS
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/font-awesome.css",
+                      "~/Content/angular-chart.css",
                       "~/Content/site.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,

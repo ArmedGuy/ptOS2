@@ -1,5 +1,5 @@
 ﻿# CoffeeScript
-app = angular.module "ptOS", ["ngAnimate", "ngRoute", "pageslide-directive"]
+app = angular.module "ptOS", ["ngAnimate", "ngRoute", "pageslide-directive", "chart.js", "ui.bootstrap"]
 
 app.filter "timeAgo", ->
     (input) ->
